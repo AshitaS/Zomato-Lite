@@ -51,53 +51,66 @@ export default function ReviewPage() {
 
   return (
     <main className="min-h-screen bg-[#FAFAF8] text-neutral-900">
-      <div className="mx-auto max-w-[560px] px-6 py-16">
-        <h1 className="text-3xl font-medium tracking-tight">
-          {restaurantName ?? "Ludhiana Burrito"}
-        </h1>
-        <p className="mt-1 text-sm text-neutral-500">Write a review</p>
+      <div className="mx-auto max-w-[560px] px-6 pb-24 pt-8">
+        <Brand />
 
-        <form onSubmit={handleSubmit} className="mt-10">
-          <label className="block text-sm text-neutral-700">Rating</label>
-          <div className="mt-2 flex gap-2">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                aria-label={`Rate ${star} star${star === 1 ? "" : "s"}`}
-                onClick={() => setRating(star)}
-                className={`text-3xl leading-none transition-colors ${
-                  star <= rating ? "text-amber-700" : "text-neutral-300"
-                } hover:text-amber-600`}
-              >
-                ★
-              </button>
-            ))}
-          </div>
+        <div className="mt-8 rounded-lg border border-neutral-200/70 bg-white p-6">
+          <h1 className="text-2xl font-medium tracking-tight">
+            {restaurantName ?? "Ludhiana Burrito"}
+          </h1>
+          <p className="mt-1 text-sm text-neutral-500">Write a review</p>
 
-          <label className="mt-8 block text-sm text-neutral-700" htmlFor="comment">
-            Your review
-          </label>
-          <textarea
-            id="comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={4}
-            placeholder="What was it like?"
-            className="mt-2 w-full rounded-md border border-neutral-200 bg-white px-4 py-3 text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-amber-700"
-          />
+          <form onSubmit={handleSubmit} className="mt-8">
+            <label className="block text-sm text-neutral-700">Rating</label>
+            <div className="mt-2 flex gap-2">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  aria-label={`Rate ${star} star${star === 1 ? "" : "s"}`}
+                  onClick={() => setRating(star)}
+                  className={`text-3xl leading-none transition-colors ${
+                    star <= rating ? "text-[#E23744]" : "text-neutral-300"
+                  } hover:text-[#E23744]`}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
 
-          {error && <p className="mt-4 text-sm text-red-700">{error}</p>}
+            <label className="mt-8 block text-sm text-neutral-700" htmlFor="comment">
+              Your review
+            </label>
+            <textarea
+              id="comment"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              rows={4}
+              placeholder="What was it like?"
+              className="mt-2 w-full rounded-md border border-neutral-200 bg-[#FAFAF8] px-4 py-3 text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-[#E23744]"
+            />
 
-          <button
-            type="submit"
-            disabled={!canSubmit}
-            className="mt-6 rounded-md bg-amber-700 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-amber-800 disabled:cursor-not-allowed disabled:bg-neutral-300"
-          >
-            {submitting ? "Sending…" : "Submit"}
-          </button>
-        </form>
+            {error && <p className="mt-4 text-sm text-[#E23744]">{error}</p>}
+
+            <button
+              type="submit"
+              disabled={!canSubmit}
+              className="mt-6 rounded-md bg-[#E23744] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#c92f3b] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-400"
+            >
+              {submitting ? "Sending…" : "Submit"}
+            </button>
+          </form>
+        </div>
       </div>
     </main>
+  );
+}
+
+function Brand() {
+  return (
+    <p className="text-center text-sm tracking-wide">
+      <span className="font-semibold text-[#E23744]">Zomato</span>
+      <span className="text-neutral-400"> Lite</span>
+    </p>
   );
 }

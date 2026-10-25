@@ -46,7 +46,8 @@ export default function RestaurantPage() {
     return (
       <main className="min-h-screen bg-[#FAFAF8] text-neutral-900">
         <div className="mx-auto max-w-[560px] px-6 py-16">
-          <p className="text-neutral-500">This restaurant does not exist.</p>
+          <Brand />
+          <p className="mt-12 text-neutral-500">This restaurant does not exist.</p>
         </div>
       </main>
     );
@@ -56,7 +57,8 @@ export default function RestaurantPage() {
     return (
       <main className="min-h-screen bg-[#FAFAF8] text-neutral-900">
         <div className="mx-auto max-w-[560px] px-6 py-16">
-          <p className="text-neutral-400">Loading…</p>
+          <Brand />
+          <p className="mt-12 text-neutral-400">Loading…</p>
         </div>
       </main>
     );
@@ -66,39 +68,45 @@ export default function RestaurantPage() {
 
   return (
     <main className="min-h-screen bg-[#FAFAF8] text-neutral-900">
-      <div className="mx-auto max-w-[560px] px-6 py-16">
-        {/* Name, with cuisine and area underneath in smaller muted text */}
-        <h1 className="text-3xl font-medium tracking-tight">{data.name}</h1>
-        <p className="mt-1 text-sm text-neutral-500">
-          {data.cuisine} · {data.area}
-        </p>
+      <div className="mx-auto max-w-[560px] px-6 pb-24 pt-8">
+        <Brand />
 
-        {/* The average rating — the biggest thing on the page.
+        {/* Identity card: name, type, area — and the average, the biggest thing on the page.
             PRINTED AS RECEIVED. No adding, no dividing, no rounding here. */}
-        <div className="mt-10 flex items-baseline gap-3">
-          <span className="text-6xl font-medium tracking-tight">
-            {data.averageRating ?? "–"}
-          </span>
-          <span className="text-sm text-neutral-500">
-            {data.totalReviews} {countWord}
-          </span>
-        </div>
+        <section className="mt-8 rounded-lg border border-neutral-200/70 bg-white p-6">
+          <h1 className="text-3xl font-medium tracking-tight">{data.name}</h1>
+          <p className="mt-1 text-sm text-neutral-500">
+            {data.cuisine} · {data.area}
+          </p>
+
+          <div className="mt-6 flex items-baseline gap-3 border-t border-neutral-100 pt-6">
+            <span className="text-6xl font-medium tracking-tight text-[#E23744]">
+              {data.averageRating ?? "–"}
+            </span>
+            <span className="text-sm text-neutral-500">
+              {data.totalReviews} {countWord}
+            </span>
+          </div>
+        </section>
 
         {data.totalReviews === 0 && (
-          <p className="mt-8 rounded-md border border-neutral-200 bg-white p-5 text-neutral-500">
+          <div className="mt-6 rounded-lg border border-neutral-200/70 bg-white p-5 text-neutral-500">
             No reviews yet — be the first to write one.
-          </p>
+          </div>
         )}
 
-        {/* The latest review, visually set apart from the rest */}
+        {/* The latest review, set apart on its own card */}
         {data.latestReview && (
-          <section className="mt-10">
-            <p className="text-xs font-medium uppercase tracking-wider text-amber-700">
+          <section className="mt-6">
+            <p className="px-1 text-xs font-medium uppercase tracking-wider text-[#E23744]">
               Latest review
             </p>
-            <div className="mt-3 rounded-lg border border-neutral-200 bg-[#FBF7EF] p-5">
+            <div className="mt-2 rounded-lg border border-neutral-200/70 bg-white p-5">
               <div className="flex items-baseline justify-between">
-                <div className="text-xl text-amber-700" aria-label={`${data.latestReview.rating} out of 5 stars`}>
+                <div
+                  className="text-xl text-[#E23744]"
+                  aria-label={`${data.latestReview.rating} out of 5 stars`}
+                >
                   {"★".repeat(data.latestReview.rating)}
                   {"☆".repeat(5 - data.latestReview.rating)}
                 </div>
@@ -114,14 +122,20 @@ export default function RestaurantPage() {
           </section>
         )}
 
-        {/* Older reviews, plain list */}
+        {/* Older reviews, grouped in one plain card */}
         {data.reviews.length > 0 && (
-          <section className="mt-10">
-            <ul className="divide-y divide-neutral-200">
+          <section className="mt-6">
+            <p className="px-1 text-xs font-medium uppercase tracking-wider text-neutral-400">
+              Earlier reviews
+            </p>
+            <div className="mt-2 divide-y divide-neutral-100 rounded-lg border border-neutral-200/70 bg-white px-5">
               {data.reviews.map((review) => (
-                <li key={review.id} className="py-4">
+                <div key={review.id} className="py-4">
                   <div className="flex items-baseline justify-between">
-                    <div className="text-sm text-neutral-400" aria-label={`${review.rating} out of 5 stars`}>
+                    <div
+                      className="text-sm text-neutral-400"
+                      aria-label={`${review.rating} out of 5 stars`}
+                    >
                       {"★".repeat(review.rating)}
                       {"☆".repeat(5 - review.rating)}
                     </div>
@@ -133,19 +147,30 @@ export default function RestaurantPage() {
                     </div>
                   </div>
                   <p className="mt-2 text-neutral-700">{review.comment}</p>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </section>
         )}
 
-        <Link
-          href={`/review/${restaurantId}`}
-          className="mt-10 inline-block rounded-md bg-amber-700 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-amber-800"
-        >
-          Write a review
-        </Link>
+        <div className="mt-8">
+          <Link
+            href={`/review/${restaurantId}`}
+            className="inline-block rounded-md bg-[#E23744] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#c92f3b]"
+          >
+            Write a review
+          </Link>
+        </div>
       </div>
     </main>
+  );
+}
+
+function Brand() {
+  return (
+    <p className="text-center text-sm tracking-wide">
+      <span className="font-semibold text-[#E23744]">Zomato</span>
+      <span className="text-neutral-400"> Lite</span>
+    </p>
   );
 }
