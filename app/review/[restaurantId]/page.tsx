@@ -50,57 +50,74 @@ export default function ReviewPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8] text-neutral-900">
-      <div className="mx-auto max-w-[560px] px-6 pb-24 pt-8">
+    <main className="min-h-screen bg-[#FAF9F7] text-stone-900">
+      <div className="mx-auto max-w-[720px] px-6 pb-28 pt-10">
         <Brand />
 
-        <div className="mt-8 rounded-lg border border-neutral-200/70 bg-white p-6">
-          <h1 className="text-2xl font-medium tracking-tight">
+        {/* Editorial masthead: task first, restaurant under it */}
+        <header className="mt-12">
+          <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-stone-400">
+            Write a review
+          </p>
+          <h1 className="mt-2 text-3xl font-medium tracking-tight">
             {restaurantName ?? "Ludhiana Burrito"}
           </h1>
-          <p className="mt-1 text-sm text-neutral-500">Write a review</p>
+        </header>
 
-          <form onSubmit={handleSubmit} className="mt-8">
-            <label className="block text-sm text-neutral-700">Rating</label>
-            <div className="mt-2 flex gap-2">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  type="button"
-                  aria-label={`Rate ${star} star${star === 1 ? "" : "s"}`}
-                  onClick={() => setRating(star)}
-                  className={`text-3xl leading-none transition-colors ${
-                    star <= rating ? "text-[#E23744]" : "text-neutral-300"
-                  } hover:text-[#E23744]`}
-                >
-                  ★
-                </button>
-              ))}
-            </div>
+        <form onSubmit={handleSubmit} className="mt-12">
+          <label className="block text-sm text-stone-600">Rating</label>
+          <div className="mt-2 flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                aria-label={`Rate ${star} star${star === 1 ? "" : "s"}`}
+                aria-pressed={star <= rating}
+                onClick={() => setRating(star)}
+                className={`text-4xl leading-none transition-all duration-150 ${
+                  star <= rating
+                    ? "scale-110 text-[#E23744]"
+                    : "scale-100 text-stone-300 hover:scale-105 hover:text-stone-400"
+                }`}
+              >
+                ★
+              </button>
+            ))}
+          </div>
 
-            <label className="mt-8 block text-sm text-neutral-700" htmlFor="comment">
-              Your review
-            </label>
-            <textarea
-              id="comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              rows={4}
-              placeholder="What was it like?"
-              className="mt-2 w-full rounded-md border border-neutral-200 bg-[#FAFAF8] px-4 py-3 text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-[#E23744]"
-            />
+          <label className="mt-10 block text-sm text-stone-600" htmlFor="comment">
+            Your review
+          </label>
+          <textarea
+            id="comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            rows={7}
+            placeholder="What was it like? The food, the service, the mood…"
+            className="mt-2 w-full resize-none rounded-2xl border border-stone-200/90 bg-white px-5 py-4 text-[15px] leading-relaxed text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-[#E23744]/50 focus:ring-4 focus:ring-[#E23744]/5"
+          />
 
-            {error && <p className="mt-4 text-sm text-[#E23744]">{error}</p>}
+          <div className="mt-2 flex items-start justify-between gap-4">
+            <p className="text-xs text-stone-400">
+              Your review is public and can't be edited later.
+            </p>
+            <p className="shrink-0 text-xs tabular-nums text-stone-400" aria-live="off">
+              {comment.length} characters
+            </p>
+          </div>
 
+          {error && <p className="mt-4 text-sm text-[#E23744]">{error}</p>}
+
+          <div className="mt-10 flex justify-end">
             <button
               type="submit"
               disabled={!canSubmit}
-              className="mt-6 rounded-md bg-[#E23744] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#c92f3b] disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-400"
+              className="rounded-full bg-[#E23744] px-9 py-3.5 text-sm font-medium text-white transition-all duration-150 hover:bg-[#C92F3B] active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-stone-200 disabled:text-stone-400 disabled:hover:bg-stone-200"
             >
               {submitting ? "Sending…" : "Submit"}
             </button>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </main>
   );
@@ -110,7 +127,7 @@ function Brand() {
   return (
     <p className="text-center text-sm tracking-wide">
       <span className="font-semibold text-[#E23744]">Zomato</span>
-      <span className="text-neutral-400"> Lite</span>
+      <span className="text-stone-400"> Lite</span>
     </p>
   );
 }
