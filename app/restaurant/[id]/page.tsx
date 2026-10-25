@@ -71,28 +71,31 @@ export default function RestaurantPage() {
       <div className="mx-auto max-w-[720px] px-6 pb-28 pt-10">
         <Brand />
 
-        {/* Compact identity header: avatar, name, metadata, rating summary */}
-        <header className="mt-12 flex items-center gap-4">
-          <div
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-stone-900 text-sm font-semibold tracking-wide text-white"
-            aria-hidden="true"
-          >
-            {initialsOf(data.name)}
-          </div>
-          <div className="min-w-0">
-            <h1 className="text-2xl font-medium leading-snug tracking-tight">{data.name}</h1>
-            <p className="mt-0.5 text-sm text-stone-500">
-              {data.cuisine} · {data.area}
-            </p>
-            <div className="mt-1.5 flex items-baseline gap-2">
-              {/* The average is PRINTED AS RECEIVED. No adding, no dividing, no rounding here. */}
-              <span className="text-lg font-semibold leading-none text-[#E23744]">
-                {data.averageRating ?? "–"}
-              </span>
-              <span className="text-xs text-stone-500">
-                {data.totalReviews} {countWord}
-              </span>
+        {/* Compact identity header: avatar, name, metadata on the left —
+            rating summary set apart on the right, aligned */}
+        <header className="mt-12 flex items-center justify-between gap-4">
+          <div className="flex min-w-0 items-center gap-4">
+            <div
+              className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-stone-900 text-sm font-semibold tracking-wide text-white"
+              aria-hidden="true"
+            >
+              {initialsOf(data.name)}
             </div>
+            <div className="min-w-0">
+              <h1 className="text-2xl font-medium leading-snug tracking-tight">{data.name}</h1>
+              <p className="mt-0.5 text-sm text-stone-500">
+                {data.cuisine} · {data.area}
+              </p>
+            </div>
+          </div>
+          <div className="shrink-0 text-right">
+            {/* The average is PRINTED AS RECEIVED. No adding, no dividing, no rounding here. */}
+            <div className="text-3xl font-semibold leading-none text-[#E23744]">
+              {data.averageRating ?? "–"}
+            </div>
+            <p className="mt-1.5 text-xs text-stone-500">
+              {data.totalReviews} {countWord}
+            </p>
           </div>
         </header>
 
