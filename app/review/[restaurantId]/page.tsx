@@ -99,7 +99,7 @@ export default function ReviewPage() {
 
           <div className="mt-2 flex items-start justify-between gap-4">
             <p className="text-xs text-stone-400">
-              Your review is public and can't be edited later.
+              Your review is public and cannot be edited later.
             </p>
             <p className="shrink-0 text-xs tabular-nums text-stone-400" aria-live="off">
               {comment.length} characters
